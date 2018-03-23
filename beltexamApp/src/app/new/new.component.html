@@ -1,26 +1,25 @@
-<h2>Adding a quote</h2>
-<a [routerLink]="['/Dashboard']">Home</a>
-<p>write a Message:</p>
+<h2>Adding a restaurant</h2>
+<h3>Register a restaurant:</h3>
+<h2 style="color:red;" *ngIf="exs">{{exs.errors['cuisine']['message']}}<br>{{exs.errors['restaurant']['message']}}</h2>
 <form (submit)="onsubmit()">
-  <label for="name">Name: 
+  <label for="name">Restaurant: 
     <input 
-    name="name" 
+    name="restaurant" 
     type="text" 
-    [(ngModel)]="newmessage['name']" 
+    [(ngModel)]="newrestaurant['restaurant']" 
     placeholder="Name must be 3 long" 
     required 
     minlength=3
-    #name="ngModel"> {{ newmessage['name'] | json }}
+    #restaurant="ngModel"> {{ newrestaurant['restaurant'] | json }}
   </label><br>
-    <label for="name">Message: <input 
-    name="message" 
+    <label for="name">Cuisine: <input 
+    name="cuisine" 
     type="text" 
-    [(ngModel)]="newmessage['desc']" 
-    placeholder="Messages must be 10 long" 
+    [(ngModel)]="newrestaurant['cuisine']" 
+    placeholder="Cuisine must be 3 long" 
     required 
     minlength=10
-    #message="ngModel"> {{ newmessage['desc'] | json }}</label>
-    <br>
-     <input type="submit"> <!-- add ngIf="message.valid" -->
+    #cuisine="ngModel"> {{ newrestaurant['cuisine'] | json }}</label>
+     <p><input type="submit"></p> <!-- add ngIf="message.valid"  for both of them-->
 </form>
 <button  [routerLink]="['/Dashboard']">Cancel</button>

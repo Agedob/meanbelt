@@ -1,15 +1,17 @@
-<h2>New Message</h2>
-<a [routerLink]="['/make_a_new_message']">Add a MessAge</a>
+<button [routerLink]="['/make_a_new_restaurant']">Add a Restaurant</button>
 <table>
   <tr>
-    <th>Author</th>
-    <th>Action avalable</th> 
+    <th>Restaurant</th>
+    <th>Cuisine</th> 
+    <th>Action avalable</th>
   </tr>
   <tr *ngFor= "let x of list" id="{{x['id']}}">
-    <td><p>{{x['name']}}</p></td>
-    <td>{{x['message']}}</td>
-    <td><button [routerLink]="['/edit/' + x['_id']]">edit</button> 
-      <button (click)="destroy(x['_id'])">delete</button>
+    <td><p>{{x['restaurant']}}</p></td>
+    <td>{{x['cuisine']}}</td>
+    <td>
+        <button [routerLink]="['/review/' + x['_id']]">Read review</button>
+        <button [routerLink]="['/edit/' + x['_id']]">Update</button> 
+      <button (click)="destroy(x['_id'])">Delete</button>
     </td>
   </tr>
 </table>

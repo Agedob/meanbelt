@@ -21,6 +21,7 @@ export class AlphaComponent implements OnInit {
       this.list = data['data'];
     })
   }
+  // make review func
     destroy(id){
       let i = this._httpService.destroyme(id);
       i.subscribe(data => {

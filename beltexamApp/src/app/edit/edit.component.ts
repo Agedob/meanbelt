@@ -9,31 +9,36 @@ import { BeltService } from '../belt.service';
 })
 export class EditComponent implements OnInit {
   me:any;
-  newauthor = { name:''}
+  editrestaurant = { restaurant:'', cuisine:''}
   exs;
-  id;
+  mesid;
 
   constructor(private _route: ActivatedRoute,private _router: Router, private _httpService: BeltService) { }
 
   ngOnInit() {
-    this._route.params.subscribe((params: Params) => this.id = (params['id']));
+    this._route.params.subscribe((params: Params) => this.mesid = (params['id']));
     this.search();
     // console.log(params['id'])
   }
   search(){
-    console.log('searching...')
-    console.log(this.id)
-    let obs = this._httpService.grabme(this.id);
+    console.log('searching for...'+ this.mesid)
+    let obs = this._httpService.grabme(this.mesid);
     obs.subscribe(data => {
       this.me = data
-      console.log(data)
+      console.log(data['_id'])
     })
   }
-  // edit(id){
-  //   let obs = this._httpService.edit(id, this.newauthor);
-  //   obs.subscribe(data => {
-  //     console.log(data);
-  //     this._router.navigate(['/alpha'])
-  //   })
-  // }
+  edit(){
+    let obs = this._httpService.update(this.mesid, this.editrestaurant);
+    obs.subscribe(data => {
+      console.log(data['data'])
+      if(data['message']=='Error'){
+        this.exs = data['data']
+        console.log(this.exs);
+      }else{
+        this.exs = ''
+        this._router.navigate(['/Dashboard'])
+      }
+    })
+  }
 }

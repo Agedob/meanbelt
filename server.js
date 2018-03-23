@@ -8,18 +8,23 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/Belt');
 
 
-// set up question schema
+// set up belt schema
 var BeltSchema = new mongoose.Schema({
-    name: {
+    restaurant: {
         type: String, 
-        required: true, 
-        minlength: [3, "You must say a real question not just letters!"] // custom error messages are just arrays
+        required: [true, "fill out forms for Restaurants"],
+        minlength: [3, "iDk any restaurants with names less than 3 char long..."] // custom error messages are just arrays
     },
-    message: {
+    cuisine: {
         type:String,
-        required: true,
-        minlength: [10, "Messages must be at least 10char long."]
-    }
+        required: [true, "fill out forms for Cuisine"],
+        minlength: [3, "Cuisine must be at least 3char long."]
+    },
+    review:[{
+        customer:{type: String, minlength:[3,"I doubt your name is as short as mine..."]},
+        cont:{type: String, minlength:[3, "write a real review scrublord"]},
+        rating:{type:Number, default:0}
+    }]
 }, {timestamps: true})
 
 // create the actual model
@@ -27,22 +32,33 @@ mongoose.model('Belt', BeltSchema);
 var Belt = mongoose.model('Belt')
 mongoose.Promise = global.Promise;
 
+// let i = new Belt()
+// i.restaurant = 'first entry';
+// i.cuisine = 'Mexican';
+// i.review.push({cont:'some text in here'})
+// i.save(function(err,data){
+//     if(err){
+//         console.log(err)
+//     }else{
+//         console.log('all good')
+//     }
+// })
+
 // get all
-app.get('/message', function(req, res){
+app.get('/restaurant', function(req, res){
     Belt.find({}, function(err, data){
         // always check and handle errors appropriately
         if(err){
             console.log(err);
             res.json({message: "Error", data: err})
         }else{
-            console.log(data);
             res.json({message: "Success", data: data})
         }
     })
 })
 
 // get by id
-app.get('message/:id', function(req,res){
+app.get('/restaurant/:id', function(req,res){
     Belt.findOne({_id:req.params.id}, function(err,data){
         if(err){
             console.log(err)
@@ -53,22 +69,31 @@ app.get('message/:id', function(req,res){
     })
 })
 
-app.post('/message', function(req,res){
+//add new
+app.post('/restaurant', function(req,res){
     let add = new Belt();
-    console.log(req.body)
-    add.name = req.body.name
-    add.message = req.body.desc
-    add.save(function(err,data){
-        if(err){
-            console.log(err)
-            res.json({message: "Error", data:err})
+    // console.log(req.body)
+    Belt.findOne({restaurant:req.body.restaurant}, function(err,data){
+        if(data){
+            res.json({message: "Error", data:{errors:{cuisine:{message:"Already exsists"}}}})
         }else{
-            res.json({message: "Safe", data:data})
+            add.restaurant = req.body.restaurant
+            add.cuisine = req.body.cuisine
+            add.save(function(err,data){
+                if(err){
+                    console.log(err)
+                    res.json({message: "Error", data:err})
+                }else{
+                    res.json({message: "Safe", data:data})
+                }
+            })
+
         }
     })
 })
 
-app.delete('/message/delete/:id', function(req,res){
+// dell..
+app.delete('/restaurant/delete/:id', function(req,res){
     Belt.remove({_id:req.params.id}, function(err,data){
         if(err){
             console.log(err)
@@ -79,6 +104,48 @@ app.delete('/message/delete/:id', function(req,res){
     })
 })
 
+// update
+app.put('/restaurant/:id', function(req,res){
+    console.log(req.body);
+    Belt.findOne({restaurant:req.body.restaurant},function(err,data){
+      if(data){
+        console.log(data)
+         res.json({message: "Error", data:{exsists:"Author Exsists"}})
+      }else{
+        Belt.findOne({_id:req.params.id},function(err,x){
+            x.restaurant = req.body.restaurant;
+            x.cuisine = req.body.cuisine;
+            x.save(function(err,data){
+                if(err){
+                    console.log(err)
+                    res.json({message: "Error", data:err});
+                }else{
+                    res.json(data)
+                }
+                })
+            })
+        }
+    })
+  })
+
+// add review
+app.post('/review/:id', function(req,res){
+    Belt.findOne({_id:req.params.id}, function(err, data){
+      if(err){
+        res.json({message: "Error", data:err})
+      }else{
+        data.review.push({cont:req.body.cont, customer:req.body.name, rating:req.body.stars})
+        data.save(function(err,data){
+          if(err){
+            res.json({message: "Error", data:err})
+            }else{
+                res.json(data)}
+        })
+      }
+    })
+})
+
+// wildcard catch all 
 app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./beltexamApp/dist/index.html"))
   });

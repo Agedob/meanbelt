@@ -1,3 +1,25 @@
 <h2>Edit this message</h2>
-<a [routerLink]="['/Dashboard']">Home</a>
-<p>write a new Message:</p>
+<p>Edit {{me['restaurant']}}:</p>
+<form (submit)="edit()">
+  <h2 style="color:red;" *ngIf="exs">{{exs.exsists}}<br>{{exs.errors['cuisine']['message']}}<br>{{exs.errors['restaurant']['message']}}</h2>
+  <label for="name">Restaurant: <input 
+    type="text"
+    name="restaurant"
+    required
+    [(ngModel)]="editrestaurant['restaurant']" 
+    placeholder="{{me['restaurant']}}" 
+    required 
+    minlength=3
+    #restaurant="ngModel"> {{ editrestaurant['restaurant'] | json }} </label><br>
+  <label for="name">Cuisine: <input 
+      type="text"
+      name="cuisine"
+      required
+      [(ngModel)]="editrestaurant['cuisine']" 
+      placeholder="{{me['cuisine']}}" 
+      required 
+      minlength=3
+      #cuisine="ngModel"> {{ editrestaurant['cuisine'] | json }} </label>
+      <p><input type="submit"></p> <!--add if-->
+      <button  [routerLink]="['/Dashboard']">Cancel</button>
+</form>

@@ -8,9 +8,9 @@ import { BeltService } from '../belt.service';
   styleUrls: ['./new.component.css']
 })
 export class NewComponent implements OnInit {
-  newmessage = {
-    name: "",
-    desc: ""
+  newrestaurant = {
+    restaurant: "",
+    cuisine: ""
   }
   exs:any;
   constructor(private _route: ActivatedRoute,private _router: Router, private _httpService: BeltService) { }
@@ -19,20 +19,22 @@ export class NewComponent implements OnInit {
 
   }
   onsubmit(){
-    let i = this._httpService.addmessage(this.newmessage);
+    let i = this._httpService.addmessage(this.newrestaurant);
     i.subscribe(data => {
       console.log(data['data'])
       if(data['message']=='Error'){
-        this.exs = data
+        console.log("error in first if", data['data'])
+        this.exs = ''
+        this.exs = data['data']
       }else{
         this.exs = ''
         this._router.navigate(['/Dashboard'])
-        console.log(data['errors'])
+        console.log("errors in else", data) //success so no errors
       }
     })
-    this.newmessage = {
-      name: "",
-      desc: ""
+    this.newrestaurant = {
+      restaurant: "",
+      cuisine: ""
     }
   }
 

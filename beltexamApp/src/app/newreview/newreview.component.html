@@ -1,0 +1,33 @@
+<h2>Adding a review for {{me['restaurant']}}</h2>
+<h2 style="color:red;" *ngIf="exs">{{exs}}</h2>
+<h2 style="color:red;" *ngIf="exs2">{{exs2}}</h2>
+<form (submit)="onsubmit()">
+  <label for="name">Your name: 
+    <input 
+    name="name" 
+    type="text" 
+    [(ngModel)]="newreview['name']" 
+    placeholder="Name must be 3 long" 
+    required 
+    minlength=3
+    #name="ngModel"> {{ newreview['name'] | json }}</label><br>
+    <label for="stars">
+      <select name="stars" [(ngModel)]="newreview['stars']">
+          <option value="1">1 star</option>
+          <option value="2">2 star</option>
+          <option value="3">3 star</option>
+          <option value="4">4 star</option>
+          <option value="5">5 star</option>
+      </select> {{ newreview['stars'] | json }}</label><br>
+    <label for="cont"> Your Review: 
+      <input 
+        type="text" 
+        name="cont"
+        [(ngModel)]="newreview['cont']" 
+        placeholder="Review must be 3 long" 
+        required 
+        minlength=3
+        #cont="ngModel"> {{ newreview['cont'] | json }}</label>
+     <p><input type="submit"></p> <!-- add ngIf="message.valid"  for both of them-->
+</form>
+<button  [routerLink]="['/review/'+ me['_id']]">Cancel</button>

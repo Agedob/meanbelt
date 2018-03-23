@@ -6,3 +6,12 @@ input{
     padding: 5px;
     margin: 10px;
 }
+td,th{
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+}
+th{
+    color:white;
+    background-color: #d3d3d3;
+}

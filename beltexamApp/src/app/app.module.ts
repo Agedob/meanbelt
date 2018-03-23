@@ -10,6 +10,8 @@ import { AlphaComponent } from './alpha/alpha.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { NewComponent } from './new/new.component';
 import { EditComponent } from './edit/edit.component';
+import { ReviewComponent } from './review/review.component';
+import { NewreviewComponent } from './newreview/newreview.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { EditComponent } from './edit/edit.component';
     AlphaComponent,
     PagenotfoundComponent,
     NewComponent,
-    EditComponent
+    EditComponent,
+    ReviewComponent,
+    NewreviewComponent
   ],
   imports: [
     BrowserModule,

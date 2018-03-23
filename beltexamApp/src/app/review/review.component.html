@@ -1,0 +1,15 @@
+<button [routerLink]="['/review/add/' + me['_id']]">New review</button>
+<button [routerLink]="['/Dashboard']">Home</button>
+<p>Reviews for {{me['restaurant']}}:</p>
+<table>
+  <tr>
+    <th>Customer</th>
+    <th>Stars</th>
+    <th>Descriptions</th>
+  </tr>
+  <tr *ngFor= "let x of list" id="{{me['_id']}}">
+    <td>{{x.customer}}</td>
+    <td>{{x.rating}}</td>
+    <td>{{x.cont}}</td>
+  </tr>
+</table>
