@@ -1,0 +1,26 @@
+<h2>Adding a quote</h2>
+<a [routerLink]="['/Dashboard']">Home</a>
+<p>write a Message:</p>
+<form (submit)="onsubmit()">
+  <label for="name">Name: 
+    <input 
+    name="name" 
+    type="text" 
+    [(ngModel)]="newmessage['name']" 
+    placeholder="Name must be 3 long" 
+    required 
+    minlength=3
+    #name="ngModel"> {{ newmessage['name'] | json }}
+  </label><br>
+    <label for="name">Message: <input 
+    name="message" 
+    type="text" 
+    [(ngModel)]="newmessage['desc']" 
+    placeholder="Messages must be 10 long" 
+    required 
+    minlength=10
+    #message="ngModel"> {{ newmessage['desc'] | json }}</label>
+    <br>
+     <input type="submit"> <!-- add ngIf="message.valid" -->
+</form>
+<button  [routerLink]="['/Dashboard']">Cancel</button>

@@ -8,13 +8,17 @@ import { FormsModule } from '@angular/forms'
 import { AppComponent } from './app.component';
 import { AlphaComponent } from './alpha/alpha.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { NewComponent } from './new/new.component';
+import { EditComponent } from './edit/edit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AlphaComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    NewComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
